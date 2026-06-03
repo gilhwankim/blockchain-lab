@@ -8,6 +8,13 @@ import java.util.Optional;
 public class UtxoSet {
     private final Map<OutPoint, TxOutput> outputs = new LinkedHashMap<>();
 
+    public UtxoSet() {
+    }
+
+    private UtxoSet(Map<OutPoint, TxOutput> outputs) {
+        this.outputs.putAll(outputs);
+    }
+
     public synchronized void apply(Transaction transaction) {
         TransactionValidator.validate(transaction, this);
 
@@ -40,5 +47,10 @@ public class UtxoSet {
         return outputs.entrySet().stream()
                 .map(entry -> new Utxo(entry.getKey(), entry.getValue()))
                 .toList();
+    }
+
+    public synchronized UtxoSet copy() {
+        // block candidate를 만들 때 실제 UTXO set을 건드리지 않고 검증 시뮬레이션하기 위한 복사본이다.
+        return new UtxoSet(new LinkedHashMap<>(outputs));
     }
 }
