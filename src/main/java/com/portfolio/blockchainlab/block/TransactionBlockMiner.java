@@ -15,7 +15,7 @@ public class TransactionBlockMiner {
         this(Clock.systemUTC());
     }
 
-    TransactionBlockMiner(Clock clock) {
+    public TransactionBlockMiner(Clock clock) {
         this.clock = clock;
     }
 
