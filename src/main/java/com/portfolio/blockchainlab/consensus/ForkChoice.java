@@ -52,7 +52,7 @@ public class ForkChoice {
         List<TransactionBlock> removed = new ArrayList<>(oldPath.subList(commonPrefixLength, oldPath.size()));
         List<TransactionBlock> added = new ArrayList<>(newPath.subList(commonPrefixLength, newPath.size()));
 
-        // removed는 tip에서 parent 방향으로 rollback되는 순서가 더 자연스럽다.
+        // removed는 tip에서 parent 방향으로 rollback하는 순서가 더 자연스럽다.
         Collections.reverse(removed);
         return new ReorgPlan(removed, added, newPath);
     }

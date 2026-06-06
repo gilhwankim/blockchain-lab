@@ -19,7 +19,7 @@ public class UtxoSet {
         TransactionValidator.validate(transaction, this);
 
         if (!transaction.coinbase()) {
-            // 소비된 output은 제거되어 이후에 다시 쓸 수 없게 된다.
+            // 소비된 output은 제거해서 이후 transaction에서 다시 사용할 수 없게 만든다.
             for (TxInput input : transaction.inputs()) {
                 outputs.remove(input.previousOutput());
             }
@@ -50,7 +50,7 @@ public class UtxoSet {
     }
 
     public synchronized UtxoSet copy() {
-        // block candidate를 만들 때 실제 UTXO set을 건드리지 않고 검증 시뮬레이션하기 위한 복사본이다.
+        // block candidate를 만들 때 실제 UTXO set을 건드리지 않고 검증을 시뮬레이션하기 위한 복사본이다.
         return new UtxoSet(new LinkedHashMap<>(outputs));
     }
 }
