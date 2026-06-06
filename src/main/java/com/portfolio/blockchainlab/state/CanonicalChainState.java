@@ -37,6 +37,11 @@ public class CanonicalChainState {
         return utxoSet.list();
     }
 
+    public synchronized UtxoSet utxoSet() {
+        // 외부에서 상태를 직접 변경하지 못하도록 현재 UTXO set의 복사본을 제공한다.
+        return utxoSet.copy();
+    }
+
     public synchronized List<TransactionBlock> canonicalChain() {
         return canonicalChain;
     }

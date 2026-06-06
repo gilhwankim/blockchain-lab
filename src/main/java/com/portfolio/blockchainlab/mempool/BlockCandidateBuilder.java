@@ -28,12 +28,12 @@ public class BlockCandidateBuilder {
             }
 
             try {
-                // 실제 UTXO set이 아니라 복사본에 적용해 block 안 double spend를 미리 걸러낸다.
+                // 실제 UTXO set이 아니라 복사본에 적용해 block 안의 double spend를 미리 걸러낸다.
                 simulation.apply(entry.transaction());
                 selected.add(entry.transaction());
                 totalFees += entry.fee();
             } catch (TransactionValidationException ignored) {
-                // 같은 UTXO를 이미 앞 transaction이 소비했다면 이 transaction은 candidate에서 제외한다.
+                // 같은 UTXO를 이미 다른 transaction이 소비했다면 이 transaction은 candidate에서 제외한다.
             }
         }
 
